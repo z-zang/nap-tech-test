@@ -2,19 +2,16 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+var _ = require('lodash');
 
 // pathname ynap-react-express
 var path = require('path');
 var rootPath = path.normalize(__dirname);
 
 console.log(rootPath)
-
 app.listen(port, () => console.log(`Server started on port ${port}`))
 
-
-
-// fetch products
-
+// fetch all products
 var allProducts = require(rootPath +'/fixtures/products.json').data
 
 app.get('/api/products', function (req, res, next) {
@@ -43,3 +40,70 @@ app.get('/api/products', function (req, res, next) {
       })
   })
 })
+
+// fetch individual product by id
+app.get('/api/product/:id', function (req, res) {
+
+  var requestedId = Number(req.params.id);
+  var productObj = _.find(allProducts, {'id': requestedId });
+
+  var body;
+
+  if (productObj) {
+      body = {
+          id: productObj.id,
+          name: productObj.name.en,
+          price: productObj.price.gross / productObj.price.divisor,
+          designer: productObj.brand.name.en,
+          onSale : productObj.onSale,
+          sizes: productObj.saleableStandardSizes,
+          badges: productObj.badges,
+          images: {
+              outfit: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_ou_sl.jpg',
+              small: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_sl.jpg',
+              large: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_pp.jpg'
+          }
+      };
+  } else {
+      body = {error: 'pid not found'}
+  };
+
+  res.json(body);
+});
+
+
+// // fetch individual product by id
+// app.get('/api/product/:filter/:order', function (req, res) {
+
+//   // diff vars:
+//   // filter: designer, price, 
+//   // order: asc, desc
+
+//   var filter = req.params.filter
+//   var order = req.params.order
+//   var productObj = _.find(allProducts, {'id': requestedId });
+
+//   var body;
+
+//   if (productObj) {
+//       body = {
+//           id: productObj.id,
+//           name: productObj.name.en,
+//           price: productObj.price.gross / productObj.price.divisor,
+//           designer: productObj.brand.name.en,
+//           onSale : productObj.onSale,
+//           sizes: productObj.saleableStandardSizes,
+//           badges: productObj.badges,
+//           images: {
+//               outfit: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_ou_sl.jpg',
+//               small: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_sl.jpg',
+//               large: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_pp.jpg'
+//           }
+//       };
+//   } else {
+//       body = {error: 'pid not found'}
+//   };
+
+//   res.json(body);
+// });
+
