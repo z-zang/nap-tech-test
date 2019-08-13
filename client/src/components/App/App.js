@@ -5,43 +5,30 @@ import './App.css';
 
 function App() {
   const [products, setProducts] = useState([])
-  // TEMP
-  const [TEST, SETTEST] = useState('')
 
-  console.log('in App.js right now')
-
-  // TEMP
-  async function fetchTest() {
-    var res = await fetch('/api')
-    var response = await res.json()
-    console.log("response", response, typeof response)
-    SETTEST(response.message)
-  }
 
   // TEMP FIX THIS TO ACCOMMODATE NEW FETCH
   async function fetchProducts() {
     var res = await fetch('/api/products')
     console.log(res)
-    // var response = await res.json()
-    // console.log("response", response, typeof response)
-    // console.warn(res)
-    // setProducts(response.data)
+    var response = await res.json()
+    console.log("response", response, typeof response)
+    console.warn(res)
+    setProducts(response.data)
   }
 
   useEffect(() => {
     fetchProducts()
   }, [])
 
-  fetchTest()
-
+  // TEMP
+  // fetchTest()
+  // fetchTest2()
 
 
   return (
     <React.Fragment>
       <Nav/>
-
-      <div>{TEST}</div>
-
       <main id="products-container">
         posthydrated main
         {products.map(el => 

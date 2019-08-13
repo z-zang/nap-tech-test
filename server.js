@@ -11,29 +11,24 @@ const fs = require('file-system')
 var path = require('path');
 var rootPath = path.normalize(__dirname);
 
-var cors = require('cors');
-app.use(cors());
-
-// setup routes
-let router = express.Router();
-
-// sample api route
-router.get('/', (req, res) => {
-  res.json({ message: 'Connected!' });
-  console.log('sample api route working!!!')
-});
-
-app.use('/api', router)
-
-// all products
+// data
 var allProducts = require(rootPath +'/fixtures/products.json').data
 
-// fetch individual product by id
-app.get('/api/product/:id', function (req, res) {
+////////////////////////////////////////////////////////
+//////// ROUTES ////////////////////////////////////////
+////////////////////////////////////////////////////////
 
+// sample routing went here
+
+// setup routes
+let product = express.Router();
+let products = express.Router();
+let designer = express.Router();
+
+// fetch individual product by id
+product.get('/:id', (req, res) => {
   var requestedId = Number(req.params.id);
   var productObj = _.find(allProducts, {'id': requestedId });
-
   var body;
 
   if (productObj) {
@@ -59,19 +54,9 @@ app.get('/api/product/:id', function (req, res) {
 });
 
 // fetch all products V2 WITH SORT
-// example: api/products?offset=60&limit=70
 
-/*
-  designer params
-    designer: designer name
-
-  sort params
-    price: price.gross
-    designer: brand.name.en
-*/
-
-app.get('/api/products', function (req, res) {
-  var designer = req.query.designer
+products.get('/', function (req, res) {
+  // var designer = req.query.designer
   var sort = req.query.sort
   var order = req.query.order
 
@@ -137,14 +122,13 @@ app.get('/api/products', function (req, res) {
 })
 
 // fetch all products from a certain designer
-app.get('/api/designer/:designer', function (req, res) {
-
+designer.get('/:designer', function (req, res) {
   var designer = req.params.designer;
   var results = _.filter(allProducts, 
     {
       brand: {
         name: {
-          en: "CLU"
+          en: designer
         }
       }
     })
@@ -178,9 +162,13 @@ app.get('/api/designer/:designer', function (req, res) {
         }
     })
   }; 
-
   res.json(body);
 });
+
+// use routes
+app.use('/api/product', product)
+app.use('/api/products', products)
+app.use('/api/designer', designer)
 
 
 // link to main html
