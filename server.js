@@ -1,69 +1,29 @@
 // setup express
-const fs = require('file-system')
 const express = require('express');
-var cors = require('cors');
 const app = express();
-const port = 5000;
-var _ = require('lodash');
+const PORT = process.env.PORT = 5000
+
+// import other needed libraries
+const _ = require('lodash');
+const fs = require('file-system')
 
 // pathname ynap-react-express
 var path = require('path');
 var rootPath = path.normalize(__dirname);
-console.log(__dirname)
 
+var cors = require('cors');
 app.use(cors());
 
+// setup routes
+let router = express.Router();
 
-app.use(express.static("public"));
-app.get("*", function(req, res) {
-    fs.readFile("./client/public/index.html", "utf8", function(err, data) {
-       res.send(data);
-    });
+// sample api route
+router.get('/', (req, res) => {
+  res.json({ message: 'Connected!' });
+  console.log('sample api route working!!!')
 });
 
-
-  app.use(function(req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  });
-
-// app.listen(5000);
-
-// app.use('./static', express.static('static'))
-// app.use(handleRender)
-
-// app.get('*', (req, res) => {
-//   const raw =`
-//   <!DOCTYPE html>
-//       <html lang="en">
-//       <head>
-//         <meta charset="UTF-8">
-//         <title>Title</title>
-//       </head>
-//       <body>
-      
-//       <div id="app"></div>
-//       <script src="dist/bundle.js"></script>
-//       </body>
-//       </html>
-//   `;
-
-//   res.send(raw);
-// });
-
-// // We are going to fill these out in the sections to follow
-// function handleRender(req, res) {
-//   /* ... */
-// }
-// function renderFullPage(html, preloadedState) {
-//   /* ... */
-// }
-
-console.log(rootPath)
-app.listen(port, () => console.log(`Server started on port ${port}`))
-
-
-
+app.use('/api', router)
 
 // all products
 var allProducts = require(rootPath +'/fixtures/products.json').data
@@ -221,3 +181,20 @@ app.get('/api/designer/:designer', function (req, res) {
 
   res.json(body);
 });
+
+
+// link to main html
+app.get("*", function(req, res) {
+  fs.readFile("./client/public/index.html", "utf8", function(err, data) {
+     res.send(data);
+  });
+});
+
+app.use(function(req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+});
+
+console.log(rootPath)
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
