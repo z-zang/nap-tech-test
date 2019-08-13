@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 function Product({pid, name, price, designer, img}) {
-  return(
+  return (
     <div id={pid} className="product">
       <p>{designer}</p>
       <img src={img} alt={name} className="prodImg"/>

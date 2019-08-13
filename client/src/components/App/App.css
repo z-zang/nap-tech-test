@@ -24,7 +24,7 @@ body{
 
 .productText{
   flex: wrap;
-  
+  text-align: center;
 }
 
 /* temp for ease of editing */

@@ -11,35 +11,8 @@ var rootPath = path.normalize(__dirname);
 console.log(rootPath)
 app.listen(port, () => console.log(`Server started on port ${port}`))
 
-// fetch all products
+// all products
 var allProducts = require(rootPath +'/fixtures/products.json').data
-
-app.get('/api/products', function (req, res, next) {
-  var total = allProducts.length;
-  var offset = parseInt(req.query.offset) || 0;
-  var limit = parseInt(req.query.limit) || 60;
-  if (offset > total) {
-      return res.type('json').sendStatus(400);
-  }
-
-  res.json({
-      offset: offset,
-      limit: limit,
-      total: total,
-      data: allProducts.slice(offset, offset+limit).map(function(product) {
-          // Simplify payload - more data available in fixture
-          return {
-              id: product.id,
-              name: product.name.en,
-              price: product.price.gross / product.price.divisor,
-              designer: product.brand.name.en,
-              image: {
-                  outfit: '//cache.net-a-porter.com/images/products/'+product.id+'/'+product.id+'_ou_sl.jpg'
-              }
-          }
-      })
-  })
-})
 
 // fetch individual product by id
 app.get('/api/product/:id', function (req, res) {
@@ -71,39 +44,126 @@ app.get('/api/product/:id', function (req, res) {
   res.json(body);
 });
 
+// fetch all products V2 WITH SORT
+// example: api/products?offset=60&limit=70
 
-// // fetch individual product by id
-// app.get('/api/product/:filter/:order', function (req, res) {
+/*
+  designer params
+    designer: designer name
 
-//   // diff vars:
-//   // filter: designer, price, 
-//   // order: asc, desc
+  sort params
+    price: price.gross
+    designer: brand.name.en
+*/
 
-//   var filter = req.params.filter
-//   var order = req.params.order
-//   var productObj = _.find(allProducts, {'id': requestedId });
+app.get('/api/products', function (req, res) {
+  var designer = req.query.designer
+  var sort = req.query.sort
+  var order = req.query.order
 
-//   var body;
+  // temp check for designer
+  if (typeof sort == "string" && typeof order == "string") {
+    console.log
+    (`Has sort and order params
+    sort: ${sort}
+    order: ${order}`)
 
-//   if (productObj) {
-//       body = {
-//           id: productObj.id,
-//           name: productObj.name.en,
-//           price: productObj.price.gross / productObj.price.divisor,
-//           designer: productObj.brand.name.en,
-//           onSale : productObj.onSale,
-//           sizes: productObj.saleableStandardSizes,
-//           badges: productObj.badges,
-//           images: {
-//               outfit: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_ou_sl.jpg',
-//               small: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_sl.jpg',
-//               large: '//cache.net-a-porter.com/images/products/'+productObj.id+'/'+productObj.id+'_in_pp.jpg'
-//           }
-//       };
-//   } else {
-//       body = {error: 'pid not found'}
-//   };
+    // all info is present, this means that it can be ordered
+    allProducts = _.orderBy(allProducts, sort, order)
 
-//   res.json(body);
-// });
+  } else {
+    console.log
+    (`No sort/order params
+    sort: ${sort}
+    order: ${order}`)
+  }
 
+  // temp check for sort
+  if (typeof sort == "string" && typeof order == "string") {
+    console.log
+    (`Has sort and order params
+    sort: ${sort}
+    order: ${order}`)
+
+    // all info is present, this means that it can be ordered
+    allProducts = _.orderBy(allProducts, sort, order)
+
+  } else {
+    console.log
+    (`No sort/order params
+    sort: ${sort}
+    order: ${order}`)
+  }
+
+  var total = allProducts.length;
+  var offset = parseInt(req.query.offset) || 0;
+  var limit = parseInt(req.query.limit) || 60;
+
+  if (offset > total) {
+      return res.type('json').sendStatus(400);
+  }
+
+  res.json({
+      offset: offset,
+      limit: limit,
+      total: total,
+      data: allProducts.slice(offset, offset+limit).map(function(product) {
+          // Simplify payload - more data available in fixture
+          return {
+              id: product.id,
+              name: product.name.en,
+              price: product.price.gross / product.price.divisor,
+              designer: product.brand.name.en,
+              image: {
+                  outfit: '//cache.net-a-porter.com/images/products/'+product.id+'/'+product.id+'_ou_sl.jpg'
+              }
+          }
+      })
+  })
+})
+
+// fetch all products from a certain designer
+app.get('/api/designer/:designer', function (req, res) {
+
+  var designer = req.params.designer;
+  var results = _.filter(allProducts, 
+    {
+      brand: {
+        name: {
+          en: "CLU"
+        }
+      }
+    })
+  
+  // console.log(designer)
+  // console.log("allprodcuts", results)
+  // ^ ABOVE IS WORKING
+  
+  var total = allProducts.length;
+  var offset = parseInt(req.query.offset) || 0;
+  var limit = parseInt(req.query.limit) || 60;
+
+  if (offset > total) {
+      return res.type('json').sendStatus(400);
+  }
+
+  var body = {
+    offset: offset,
+    limit: limit,
+    total: total,
+    data: results.slice(offset, offset+limit).map(function(product) {
+        // Simplify payload - more data available in fixture
+        return {
+            id: product.id,
+            name: product.name.en,
+            price: product.price.gross / product.price.divisor,
+            designer: product.brand.name.en,
+            image: {
+                outfit: '//cache.net-a-porter.com/images/products/'+product.id+'/'+product.id+'_ou_sl.jpg'
+            }
+        }
+    })
+  }; 
+
+  res.json(body);
+});
