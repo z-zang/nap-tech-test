@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import Product from '../Product/Product'
+import Product from '../Product/Product';
+import Nav from '../Nav/Nav';
 import './App.css';
 
 function App() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([])
 
   async function fetchProducts() {
     var res = await fetch('/api/products')
-    var response = await res.json()
-    console.log("response", response, typeof response)
-    setProducts(response.data)
+    console.log(res)
+    // var response = await res.json()
+    // console.log("response", response, typeof response)
+    // console.warn(res)
+    // setProducts(response.data)
   }
 
   useEffect(() => {
@@ -18,10 +21,10 @@ function App() {
 
   return (
     <React.Fragment>
-      <nav>
-        sdfs
-      </nav>
+      <Nav/>
+
       <main id="products-container">
+        posthydrated main
         {products.map(el => 
           <Product 
             key={el.id}
