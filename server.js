@@ -24,6 +24,7 @@ var allProducts = require(rootPath +'/fixtures/products.json').data
 let product = express.Router();
 let products = express.Router();
 let designer = express.Router();
+let designers = express.Router();
 
 // fetch individual product by id
 product.get('/:id', (req, res) => {
@@ -164,10 +165,19 @@ designer.get('/:designer', function (req, res) {
   res.json(body);
 });
 
+// fetch all products from a certain designer
+designers.get('/designers', function (req, res) {
+  var uniqDes = _.uniqBy(allProducts, 'brand.name.en')
+  var uniqDesArr = uniqDes.map((obj) => obj.brand.name.en).sort()
+  res.json({uniqDesArr});
+});
+
+
 // use routes
 app.use('/api/product', product)
 app.use('/api/products', products)
 app.use('/api/designer', designer)
+app.use('/api', designers)
 
 
 // link to main html
