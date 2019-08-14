@@ -7,33 +7,26 @@ function App() {
   const [products, setProducts] = useState([])
   const [offset, setOffset] = useState(0)
 
-  // console.log('offset from App.js', offset)
-  // console.log('products', products[0])
-
-  // TEMP FIX THIS TO ACCOMMODATE NEW FETCH
+// add functionality to get stuff from one designer only: might need to update express?
   async function fetchProducts() {
     var url = `/api/products?offset=${offset}`
     var res = await fetch(url)
-    // console.log(res)
     var response = await res.json()
-    // console.log("response", response, typeof response)
-    // console.warn(res)
     setProducts(response.data)
   }
 
   useEffect(() => {
     fetchProducts()
-    // console.log("useEffect sent")
-  }, [])
+  }, [offset])
 
   return (
       <React.Fragment>
 
-          <Navbar 
-            offset={offset} 
-            setOffset={setOffset} 
-            fetchProducts={fetchProducts}
-          />
+        <Navbar 
+          offset={offset} 
+          setOffset={setOffset} 
+          fetchProducts={fetchProducts}
+        />
       
         <main id="products-container">
           {products.map(el => 
