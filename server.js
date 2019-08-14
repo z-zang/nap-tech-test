@@ -1,25 +1,35 @@
 // setup express
 const express = require('express');
 const app = express();
-const port = 5000;
-var _ = require('lodash');
+const PORT = process.env.PORT = 5000
+
+// import other needed libraries
+const _ = require('lodash');
+const fs = require('file-system')
 
 // pathname ynap-react-express
 var path = require('path');
 var rootPath = path.normalize(__dirname);
 
-console.log(rootPath)
-app.listen(port, () => console.log(`Server started on port ${port}`))
-
-// all products
+// data
 var allProducts = require(rootPath +'/fixtures/products.json').data
 
-// fetch individual product by id
-app.get('/api/product/:id', function (req, res) {
+////////////////////////////////////////////////////////
+//////// ROUTES ////////////////////////////////////////
+////////////////////////////////////////////////////////
 
+// sample routing went here
+
+// setup routes
+let product = express.Router();
+let products = express.Router();
+let designer = express.Router();
+let designers = express.Router();
+
+// fetch individual product by id
+product.get('/:id', (req, res) => {
   var requestedId = Number(req.params.id);
   var productObj = _.find(allProducts, {'id': requestedId });
-
   var body;
 
   if (productObj) {
@@ -45,19 +55,8 @@ app.get('/api/product/:id', function (req, res) {
 });
 
 // fetch all products V2 WITH SORT
-// example: api/products?offset=60&limit=70
-
-/*
-  designer params
-    designer: designer name
-
-  sort params
-    price: price.gross
-    designer: brand.name.en
-*/
-
-app.get('/api/products', function (req, res) {
-  var designer = req.query.designer
+products.get('/', function (req, res) {
+  // var designer = req.query.designer
   var sort = req.query.sort
   var order = req.query.order
 
@@ -123,14 +122,13 @@ app.get('/api/products', function (req, res) {
 })
 
 // fetch all products from a certain designer
-app.get('/api/designer/:designer', function (req, res) {
-
+designer.get('/:designer', function (req, res) {
   var designer = req.params.designer;
   var results = _.filter(allProducts, 
     {
       brand: {
         name: {
-          en: "CLU"
+          en: designer
         }
       }
     })
@@ -164,6 +162,36 @@ app.get('/api/designer/:designer', function (req, res) {
         }
     })
   }; 
-
   res.json(body);
 });
+
+// fetch all products from a certain designer
+designers.get('/designers', function (req, res) {
+  var uniqDes = _.uniqBy(allProducts, 'brand.name.en')
+  var uniqDesArr = uniqDes.map((obj) => obj.brand.name.en).sort()
+  res.json({uniqDesArr});
+});
+
+
+// use routes
+app.use('/api/product', product)
+app.use('/api/products', products)
+app.use('/api/designer', designer)
+app.use('/api', designers)
+
+
+// link to main html
+app.get("*", function(req, res) {
+  fs.readFile("./client/public/index.html", "utf8", function(err, data) {
+     res.send(data);
+  });
+});
+
+app.use(function(req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+});
+
+console.log(rootPath)
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
