@@ -1,15 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import Product from '../Product/Product';
-import Nav from '../Nav/Nav';
+import Navbar from '../Navbar/Navbar';
 import './App.css';
 
 function App() {
   const [products, setProducts] = useState([])
 
+  // console.log(offset)
+  // const [query, setQuery] = useState([])
 
   // TEMP FIX THIS TO ACCOMMODATE NEW FETCH
   async function fetchProducts() {
-    var res = await fetch('/api/products')
+    var url = `/api/products`
+    var res = await fetch(url)
     console.log(res)
     var response = await res.json()
     console.log("response", response, typeof response)
@@ -21,30 +24,24 @@ function App() {
     fetchProducts()
   }, [])
 
-  // TEMP
-  // fetchTest()
-  // fetchTest2()
-
-
   return (
-    <React.Fragment>
-      <Nav/>
-      <main id="products-container">
-        posthydrated main
-        {products.map(el => 
-          <Product 
-            key={el.id}
-            pid={el.id}
-            name={el.name}
-            price={el.price}
-            designer={el.designer}
-            img={el.image.outfit}
-          />
-        )}
-      </main>
+      <React.Fragment>
 
-    </React.Fragment>
-
+          <Navbar/>
+      
+        <main id="products-container">
+          {products.map(el => 
+            <Product 
+              key={el.id}
+              pid={el.id}
+              name={el.name}
+              price={el.price}
+              designer={el.designer}
+              img={el.image.outfit}
+            />
+          )}
+        </main>
+      </React.Fragment>
   );
 }
 

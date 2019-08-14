@@ -54,7 +54,6 @@ product.get('/:id', (req, res) => {
 });
 
 // fetch all products V2 WITH SORT
-
 products.get('/', function (req, res) {
   // var designer = req.query.designer
   var sort = req.query.sort
