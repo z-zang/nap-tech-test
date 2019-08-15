@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-function Navbar({offset, setOffset}) {
+function Navbar({offset, setOffset, selDesigner, setSelDesigner}) {
   const [designers, setDesigners] = useState([])
 
   // fetch designers
@@ -22,6 +22,10 @@ function Navbar({offset, setOffset}) {
     var temp = offset - 60
     setOffset(temp)
   }
+  function handleSetDesigner(e) {
+    console.log("designer select target", e.target.value)
+    setSelDesigner(e.target.value)
+  }
 
   return (
     <nav>
@@ -31,13 +35,12 @@ function Navbar({offset, setOffset}) {
         <option value="Price high to low">Price high to low</option>
       </select>
 
-      <select>
-        <option value="Choose Designer" defaultValue>Choose Designer</option>
+      <select value={selDesigner} onChange={(e) => handleSetDesigner(e)}>
+        <option value="" defaultValue>Choose Designer</option>
         {designers.map(el =>
           <option value={el} key={designers[el]}>{el}</option>
         )}
 
-        <option value="Designer">Designer</option>
       </select>
 
       <button onClick={decrOffset} disabled={offset<=0}>Prev Page</button>

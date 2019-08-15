@@ -54,7 +54,7 @@ product.get('/:id', (req, res) => {
   res.json(body);
 });
 
-// fetch all products V2 WITH SORT
+// fetch all products V2 WITH SORT ** UPDATE FOR INCLUDING DESIGNER
 products.get('/', function (req, res) {
   // var designer = req.query.designer
   var sort = req.query.sort
