@@ -14,16 +14,11 @@ var rootPath = path.normalize(__dirname);
 // data
 var allProducts = require(rootPath +'/fixtures/products.json').data
 
-////////////////////////////////////////////////////////
 //////// ROUTES ////////////////////////////////////////
-////////////////////////////////////////////////////////
-
-// sample routing went here
 
 // setup routes
 let product = express.Router();
 let products = express.Router();
-let designer = express.Router();
 let designers = express.Router();
 
 // fetch individual product by id
@@ -56,47 +51,27 @@ product.get('/:id', (req, res) => {
 
 // fetch all products V2 WITH SORT ** UPDATE FOR INCLUDING DESIGNER
 products.get('/', function (req, res) {
-  // var designer = req.query.designer
-  var sort = req.query.sort
+  var designer = req.query.designer
   var order = req.query.order
-
-  // temp check for designer
-  if (typeof sort == "string" && typeof order == "string") {
-    console.log
-    (`Has sort and order params
-    sort: ${sort}
-    order: ${order}`)
-
-    // all info is present, this means that it can be ordered
-    allProducts = _.orderBy(allProducts, sort, order)
-
-  } else {
-    console.log
-    (`No sort/order params
-    sort: ${sort}
-    order: ${order}`)
-  }
-
-  // temp check for sort
-  if (typeof sort == "string" && typeof order == "string") {
-    console.log
-    (`Has sort and order params
-    sort: ${sort}
-    order: ${order}`)
-
-    // all info is present, this means that it can be ordered
-    allProducts = _.orderBy(allProducts, sort, order)
-
-  } else {
-    console.log
-    (`No sort/order params
-    sort: ${sort}
-    order: ${order}`)
-  }
-
-  var total = allProducts.length;
   var offset = parseInt(req.query.offset) || 0;
   var limit = parseInt(req.query.limit) || 60;
+
+  var results = allProducts
+  var total = results.length;
+
+  // RETURNS ALL PRODUCTS BY DESIGNER QUERY PARAMS
+  if (designer != undefined) {
+    console.log(`Designer value: ${designer}`)
+    results = _.filter(results, 
+      { brand: {name: {en: designer}}}   
+    )
+  }
+
+  // RETURNS ALL PRODUCTS BY PRICE SORTORDER PARAMS
+  if (typeof order == "string") {
+    console.log(`Price order: ${order}`)
+    results = _.orderBy(results, 'price.gross', order)
+  }
 
   if (offset > total) {
       return res.type('json').sendStatus(400);
@@ -106,7 +81,7 @@ products.get('/', function (req, res) {
       offset: offset,
       limit: limit,
       total: total,
-      data: allProducts.slice(offset, offset+limit).map(function(product) {
+      data: results.slice(offset, offset+limit).map(function(product) {
           // Simplify payload - more data available in fixture
           return {
               id: product.id,
@@ -121,64 +96,17 @@ products.get('/', function (req, res) {
   })
 })
 
-// fetch all products from a certain designer
-designer.get('/:designer', function (req, res) {
-  var designer = req.params.designer;
-  var results = _.filter(allProducts, 
-    {
-      brand: {
-        name: {
-          en: designer
-        }
-      }
-    })
-  
-  // console.log(designer)
-  // console.log("allprodcuts", results)
-  // ^ ABOVE IS WORKING
-  
-  var total = allProducts.length;
-  var offset = parseInt(req.query.offset) || 0;
-  var limit = parseInt(req.query.limit) || 60;
-
-  if (offset > total) {
-      return res.type('json').sendStatus(400);
-  }
-
-  var body = {
-    offset: offset,
-    limit: limit,
-    total: total,
-    data: results.slice(offset, offset+limit).map(function(product) {
-        // Simplify payload - more data available in fixture
-        return {
-            id: product.id,
-            name: product.name.en,
-            price: product.price.gross / product.price.divisor,
-            designer: product.brand.name.en,
-            image: {
-                outfit: '//cache.net-a-porter.com/images/products/'+product.id+'/'+product.id+'_ou_sl.jpg'
-            }
-        }
-    })
-  }; 
-  res.json(body);
-});
-
-// fetch all products from a certain designer
+// fetch a list of all designers
 designers.get('/designers', function (req, res) {
   var uniqDes = _.uniqBy(allProducts, 'brand.name.en')
   var uniqDesArr = uniqDes.map((obj) => obj.brand.name.en).sort()
   res.json({uniqDesArr});
 });
 
-
 // use routes
 app.use('/api/product', product)
 app.use('/api/products', products)
-app.use('/api/designer', designer)
 app.use('/api', designers)
-
 
 // link to main html
 app.get("*", function(req, res) {

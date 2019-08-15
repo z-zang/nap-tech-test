@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 
-function Navbar({offset, setOffset, selDesigner, setSelDesigner}) {
+function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSelDesigner}) {
   const [designers, setDesigners] = useState([])
 
-  // fetch designers
+  // fetch designers list for dropdown
   async function fetchDesignerList() {
     var res = await fetch('/api/designers')
     var response = await res.json()
@@ -14,6 +14,7 @@ function Navbar({offset, setOffset, selDesigner, setSelDesigner}) {
     fetchDesignerList()
   }, [])
 
+  // update to custom amount
   function incrOffset() {
     var temp = offset + 60
     setOffset(temp)
@@ -22,17 +23,23 @@ function Navbar({offset, setOffset, selDesigner, setSelDesigner}) {
     var temp = offset - 60
     setOffset(temp)
   }
+
+  function handleSetPriceSort(e) {
+    setPriceSort(e.target.value)
+    setOffset(0)
+  }
+
   function handleSetDesigner(e) {
-    console.log("designer select target", e.target.value)
     setSelDesigner(e.target.value)
+    setOffset(0)
   }
 
   return (
     <nav>
-      <select>
-        <option value="Sort By">Sort By</option>
-        <option value="Price low to high">Price low to high</option>
-        <option value="Price high to low">Price high to low</option>
+      <select value={priceSort} onChange={(e) => handleSetPriceSort(e)}>
+        <option value="">Sort By</option>
+        <option value="asc">Price low to high</option>
+        <option value="desc">Price high to low</option>
       </select>
 
       <select value={selDesigner} onChange={(e) => handleSetDesigner(e)}>
@@ -40,11 +47,9 @@ function Navbar({offset, setOffset, selDesigner, setSelDesigner}) {
         {designers.map(el =>
           <option value={el} key={designers[el]}>{el}</option>
         )}
-
       </select>
 
       <button onClick={decrOffset} disabled={offset<=0}>Prev Page</button>
-
       <button onClick={incrOffset} disabled={offset>500}>Next Page</button>
     </nav>
   )

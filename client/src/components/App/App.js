@@ -6,14 +6,16 @@ import './App.css';
 function App() {
   const [products, setProducts] = useState([])
   const [offset, setOffset] = useState(0)
+  const [priceSort, setPriceSort] = useState('')
   const [selDesigner, setSelDesigner] = useState('')
 
-// add functionality to get stuff from one designer only: might need to update express?
   async function fetchProducts() {
-    console.log(selDesigner)
+    var designer = selDesigner == '' ? '' : `&designer=${selDesigner}` 
+    var offsetVar = `&offset=${offset}`
+    var sort = priceSort == '' ? '' : `&order=${priceSort}` 
 
-    
-    var url = `/api/products?offset=${offset}`
+    var url = '/api/products?' + designer + sort + offsetVar 
+    console.log('requestURL:', url)
     var res = await fetch(url)
     var response = await res.json()
     setProducts(response.data)
@@ -21,7 +23,7 @@ function App() {
 
   useEffect(() => {
     fetchProducts()
-  }, [offset, selDesigner])
+  }, [offset, priceSort, selDesigner])
 
   return (
       <React.Fragment>
@@ -29,6 +31,8 @@ function App() {
         <Navbar 
           offset={offset} 
           setOffset={setOffset} 
+          priceSort={priceSort}
+          setPriceSort={setPriceSort}
           selDesigner={selDesigner}
           setSelDesigner={setSelDesigner}
         />
