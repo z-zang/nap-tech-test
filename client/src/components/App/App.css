@@ -1,6 +1,13 @@
 body{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1em;
+  padding-top: 40px
+}
+
+/* so the react router doesn't turn it into hyperlinks */
+.router-link{
+  text-decoration: none;
+  color: black;
 }
 
 /* Nav */
@@ -19,11 +26,18 @@ nav{
   flex-wrap: wrap;
   justify-content: center;
   /* for title */
-  white-space: pre-wrap
+  white-space: pre-wrap;
+}
+
+.product-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .product {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,15 +45,20 @@ nav{
   flex: 1 0 0;
 }
 
-.productText{
+.productText {
   flex: wrap;
   text-align: center;
 }
 
-/* temp for ease of editing */
-.product, img{
-  border: 1px black solid;
+/* Product view */
+.product-detail{
+  white-space: pre-wrap;
 }
+
+/* temp for ease of editing */
+/* .product, img{
+  border: 1px black solid;
+} */
 
 /* MEDIA QUERIES */
 
@@ -59,7 +78,6 @@ nav{
   body{
     font-size: 0.8em;
   }
-
 
   .prodImg{
     width: 130px;
