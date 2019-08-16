@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSelDesigner}) {
+function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSelDesigner, totalProducts}) {
   const [designers, setDesigners] = useState([])
 
   // fetch designers list for dropdown
@@ -51,6 +51,8 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
 
       <button onClick={decrOffset} disabled={offset<=0}>Prev Page</button>
       <button onClick={incrOffset} disabled={offset>500}>Next Page</button>
+
+      <p>{totalProducts !== 0 ? (totalProducts > 1 ? `${totalProducts} results` : `${totalProducts} result`) : 'No results'}</p>
     </nav>
   )
 }

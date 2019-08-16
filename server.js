@@ -80,7 +80,7 @@ products.get('/', function (req, res) {
   res.json({
       offset: offset,
       limit: limit,
-      total: total,
+      total: results.length,
       data: results.slice(offset, offset+limit).map(function(product) {
           // Simplify payload - more data available in fixture
           return {
