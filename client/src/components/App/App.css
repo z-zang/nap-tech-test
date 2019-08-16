@@ -1,7 +1,9 @@
 body{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1em;
-  padding-top: 40px
+  padding: 10px;
+  padding-top: 80px;
+  margin: 0px;
 }
 
 /* so the react router doesn't turn it into hyperlinks */
@@ -14,12 +16,18 @@ body{
 nav{
   position: fixed;
   top: 0;
-  width: 100%;
+  right: 0;
+  left: 0;
   background-color: white;
   padding: 5px;
 }
 
-/* Products */
+select{
+  margin-bottom: 5px;
+}
+
+/* PLP view */
+/* container */
 #products-container {
   max-width: 100%;
   display: flex;
@@ -53,10 +61,12 @@ nav{
 /* Product view */
 .product-detail{
   white-space: pre-wrap;
+  display: grid;
+  grid-template-columns: auto;
 }
 
 /* temp for ease of editing */
-/* .product, img{
+/* .product, img, nav{
   border: 1px black solid;
 } */
 
