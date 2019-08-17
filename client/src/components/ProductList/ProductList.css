@@ -1,0 +1,34 @@
+#products-container {
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 50px;
+  white-space: pre-wrap;
+}
+
+.product-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+}
+
+.product:hover {
+  background-color: #F0F0F0;
+}
+
+.productText {
+  flex: wrap;
+  text-align: center;
+}

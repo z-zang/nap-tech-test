@@ -14,15 +14,15 @@ function App() {
   const [selDesigner, setSelDesigner] = useState('')
 
   // fetch products
-  async function fetchProducts() {
-    var designer = selDesigner === '' ? '' : `&designer=${selDesigner}` 
-    var offsetVar = `&offset=${offset}`
-    var sort = priceSort === '' ? '' : `&order=${priceSort}` 
+  const fetchProducts = async () => {
+    let designer = selDesigner === '' ? '' : `&designer=${selDesigner}` 
+    let offsetVar = `&offset=${offset}`
+    let sort = priceSort === '' ? '' : `&order=${priceSort}` 
 
-    var url = '/api/products?' + designer + sort + offsetVar 
+    let url = '/api/products?' + designer + sort + offsetVar 
     console.log('fetchProducts requestURL:', url)
-    var res = await fetch(url)
-    var response = await res.json()
+    let res = await fetch(url)
+    let response = await res.json()
     setProducts(response.data)
     setTotalProducts(response.total)
   }
@@ -33,15 +33,18 @@ function App() {
 
   return (
       <React.Fragment>
-        <Navbar 
-          offset={offset} 
-          setOffset={setOffset} 
-          priceSort={priceSort}
-          setPriceSort={setPriceSort}
-          selDesigner={selDesigner}
-          setSelDesigner={setSelDesigner}
-          totalProducts={totalProducts}
-        />
+        <Switch>
+          <Route exact path="/" render={(x) => 
+            <Navbar {...x} 
+              offset={offset} 
+              setOffset={setOffset} 
+              priceSort={priceSort}
+              setPriceSort={setPriceSort}
+              selDesigner={selDesigner}
+              setSelDesigner={setSelDesigner}
+              totalProducts={totalProducts} />}
+            />
+        </Switch>
 
         <Switch>
             <Route exact path="/" render={(x) => <ProductList {...x} products={products} />}/>

@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
+import './Navbar.css'
 
 function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSelDesigner, totalProducts}) {
   const [designers, setDesigners] = useState([])
 
   // fetch designers list for dropdown
   async function fetchDesignerList() {
-    var res = await fetch('/api/designers')
-    var response = await res.json()
+    let res = await fetch('/api/designers')
+    let response = await res.json()
     setDesigners(response.uniqDesArr)
   }
 
@@ -15,23 +16,40 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
   }, [])
 
   // update to custom amount
-  function incrOffset() {
-    var temp = offset + 60
-    setOffset(temp)
-  }
-  function decrOffset() {
-    var temp = offset - 60
+  const incrOffset = () => {
+    let temp = offset + 60
     setOffset(temp)
   }
 
-  function handleSetPriceSort(e) {
+  const decrOffset = () => {
+    let temp = offset - 60
+    setOffset(temp)
+  }
+
+  const handleSetPriceSort = (e) => {
     setPriceSort(e.target.value)
     setOffset(0)
   }
 
-  function handleSetDesigner(e) {
+  const handleSetDesigner = (e) => {
     setSelDesigner(e.target.value)
     setOffset(0)
+  }
+
+  const showResults = () => {
+    let limit = offset + 60 >= totalProducts ? totalProducts : offset + 60
+    if (totalProducts !== 0) {
+      if (totalProducts > 60) {
+        return `Showing ${offset} to ${limit} of ${totalProducts} results`
+      } else if (totalProducts > 1) {
+        return `Showing ${totalProducts} results`
+      }
+      else {
+        return `${totalProducts} result`
+      } 
+    } else {
+        return 'No results'
+    }
   }
 
   return (
@@ -43,16 +61,22 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
       </select>
 
       <select value={selDesigner} onChange={(e) => handleSetDesigner(e)}>
-        <option value="" defaultValue>Choose Designer</option>
+        <option value="" defaultValue>All Designers</option>
         {designers.map(el =>
           <option value={el} key={designers[el]}>{el}</option>
         )}
       </select>
+      
+      <span>
+      {totalProducts < 60 ? null :
+        <div>
+        <button className='pagination-button' onClick={decrOffset} disabled={offset<=0}>← Prev Page</button>
+        <button className='pagination-button' onClick={incrOffset} disabled={offset + 60 > totalProducts}>Next Page →</button>
+        </div>
+      }
+      </span>
 
-      <button onClick={decrOffset} disabled={offset<=0}>Prev Page</button>
-      <button onClick={incrOffset} disabled={offset>500}>Next Page</button>
-
-      <p>{totalProducts !== 0 ? (totalProducts > 1 ? `${totalProducts} results` : `${totalProducts} result`) : 'No results'}</p>
+      <div>{showResults()}</div>
     </nav>
   )
 }

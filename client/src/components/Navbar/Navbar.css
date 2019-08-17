@@ -1,0 +1,28 @@
+/* Nav */
+nav{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: white;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 0px 3px black;
+}
+
+nav > * {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+select{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1em;
+  margin-bottom: 5px;
+  padding: 5px;
+  box-shadow: none;
+  border: 1px black solid;
+}

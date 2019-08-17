@@ -1,0 +1,19 @@
+.product-detail{
+  white-space: pre-wrap;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  grid-column-gap: 30px;
+  max-width: 100%;
+  display: grid;
+  justify-content: center;
+  /* for title */
+  white-space: pre-wrap;
+}
+.image-large {
+  max-width: 100%;
+  border: 1px 
+}
+.prod-detail-imgs > * {
+  max-width: 50%;
+}
