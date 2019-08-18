@@ -33,29 +33,26 @@ function App() {
 
   return (
       <React.Fragment>
-        <Switch>
-          <Route exact path="/" render={(x) => 
-            <Navbar {...x} 
-              offset={offset} 
-              setOffset={setOffset} 
-              priceSort={priceSort}
-              setPriceSort={setPriceSort}
-              selDesigner={selDesigner}
-              setSelDesigner={setSelDesigner}
-              totalProducts={totalProducts} />}
-            />
-        </Switch>
+          <Switch>
+            <Route exact path="/" render={(x) => 
+              <Navbar {...x} 
+                offset={offset} 
+                setOffset={setOffset} 
+                priceSort={priceSort}
+                setPriceSort={setPriceSort}
+                selDesigner={selDesigner}
+                setSelDesigner={setSelDesigner}
+                totalProducts={totalProducts} />}
+              />
+          </Switch>
 
-        <Switch>
-            <Route exact path="/" render={(x) => <ProductList {...x} products={products} />}/>
-            <Route exact path='/product/:pid' component={ProductDetail}/>
-            <Route component={Error}/>
-        </Switch>
-
+          <Switch>
+              <Route exact path="/" render={(x) => <ProductList {...x} products={products} totalProducts={totalProducts}/>}/>
+              <Route exact path='/product/:pid' component={ProductDetail}/>
+              <Route component={Error}/>
+          </Switch>
       </React.Fragment>
   );
 }
-
-
 
 export default App;

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Product should match snapshot 1`] = `
+<Product
+  designer="Donna Karan"
+  img="//cache.net-a-porter.com/images/products/504815/504815_ou_sl.jpg"
+  name="Cutout stretch-jersey dress"
+  pid="504815"
+  price="1270"
+>
+  <div
+    className="product"
+  >
+    <Link
+      className="router-link"
+      to="/product/504815"
+    >
+      <a
+        className="router-link"
+        href="/product/504815"
+        onClick={[Function]}
+      >
+        <div
+          className="product-container"
+          id="504815"
+        >
+          <p>
+            Donna Karan
+          </p>
+          <img
+            alt="Cutout stretch-jersey dress"
+            className="prodImg"
+            src="//cache.net-a-porter.com/images/products/504815/504815_ou_sl.jpg"
+          />
+          <p
+            className="productText"
+          >
+            Cutout stretch-jersey dress
+          </p>
+          <p>
+            £
+            1270
+          </p>
+        </div>
+      </a>
+    </Link>
+  </div>
+</Product>
+`;

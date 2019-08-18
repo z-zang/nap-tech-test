@@ -40,11 +40,11 @@ function ProductDetail({match}) {
           <h4>{prodData.name}</h4>
           <p>£{prodData.price}</p>
 
-          <img src={prodData.images.large} alt={`${prodData.name} large image`} className='image-large'/>
+          <img src={prodData.images.large} alt={`${prodData.name} large`} className='image-large'/>
 
           <div className="prod-detail-imgs">
-            <img src={prodData.images.outfit} alt={`${prodData.name} outfit image`}/>
-            <img src={prodData.images.small} alt={`${prodData.name} small image`}/>
+            <img src={prodData.images.outfit} alt={`${prodData.name} outfit`}/>
+            <img src={prodData.images.small} alt={`${prodData.name} small`}/>
           </div>
 
           <p><i>Product id: {prodData.id}</i></p>
