@@ -8,8 +8,8 @@ const _ = require('lodash');
 const fs = require('file-system')
 
 // pathname ynap-react-express
-let path = require('path');
-let rootPath = path.normalize(__dirname);
+const path = require('path');
+const rootPath = path.normalize(__dirname);
 
 // data
 const allProducts = require(rootPath +'/fixtures/products.json').data
@@ -17,9 +17,9 @@ const allProducts = require(rootPath +'/fixtures/products.json').data
 //////// ROUTES ////////////////////////////////////////
 
 // setup routes
-let product = express.Router();
-let products = express.Router();
-let designers = express.Router();
+const product = express.Router();
+const products = express.Router();
+const designers = express.Router();
 
 // fetch individual product by id
 product.get('/:id', (req, res) => {

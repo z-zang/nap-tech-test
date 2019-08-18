@@ -6,7 +6,7 @@ function ProductList({products, totalProducts}) {
   return (
     <main id="products-container">
 
-    { totalProducts != 0 ? null :
+    { totalProducts !== 0 ? null :
     <div>
       There are currently no products available for this designer.
     </div>

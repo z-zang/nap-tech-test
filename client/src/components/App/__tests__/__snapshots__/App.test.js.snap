@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should match snapshot 1`] = `
+<App>
+  <Switch>
+    <Route
+      computedMatch={
+        Object {
+          "isExact": true,
+          "params": Object {},
+          "path": "/",
+          "url": "/",
+        }
+      }
+      exact={true}
+      location={
+        Object {
+          "hash": "",
+          "key": "01zxbz",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        }
+      }
+      path="/"
+      render={[Function]}
+    >
+      <Navbar
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "canGo": [Function],
+            "createHref": [Function],
+            "entries": Array [
+              Object {
+                "hash": "",
+                "key": "01zxbz",
+                "pathname": "/",
+                "search": "",
+                "state": undefined,
+              },
+            ],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "index": 0,
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "key": "01zxbz",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        location={
+          Object {
+            "hash": "",
+            "key": "01zxbz",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          }
+        }
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {},
+            "path": "/",
+            "url": "/",
+          }
+        }
+        offset={0}
+        priceSort=""
+        selDesigner=""
+        setOffset={[Function]}
+        setPriceSort={[Function]}
+        setSelDesigner={[Function]}
+        totalProducts=""
+      >
+        <nav>
+          <select
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              value=""
+            >
+              Sort By
+            </option>
+            <option
+              value="asc"
+            >
+              Price low to high
+            </option>
+            <option
+              value="desc"
+            >
+              Price high to low
+            </option>
+          </select>
+          <select
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              defaultValue={true}
+              value=""
+            >
+              All Designers
+            </option>
+          </select>
+          <span />
+          <div>
+             result
+          </div>
+        </nav>
+      </Navbar>
+    </Route>
+  </Switch>
+  <Switch>
+    <Route
+      computedMatch={
+        Object {
+          "isExact": true,
+          "params": Object {},
+          "path": "/",
+          "url": "/",
+        }
+      }
+      exact={true}
+      location={
+        Object {
+          "hash": "",
+          "key": "01zxbz",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        }
+      }
+      path="/"
+      render={[Function]}
+    >
+      <ProductList
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "canGo": [Function],
+            "createHref": [Function],
+            "entries": Array [
+              Object {
+                "hash": "",
+                "key": "01zxbz",
+                "pathname": "/",
+                "search": "",
+                "state": undefined,
+              },
+            ],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "index": 0,
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "key": "01zxbz",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        location={
+          Object {
+            "hash": "",
+            "key": "01zxbz",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          }
+        }
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {},
+            "path": "/",
+            "url": "/",
+          }
+        }
+        products={Array []}
+        totalProducts=""
+      >
+        <main
+          id="products-container"
+        />
+      </ProductList>
+    </Route>
+  </Switch>
+</App>
+`;
