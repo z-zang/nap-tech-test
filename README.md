@@ -1,6 +1,6 @@
 # YNAP TECH TEST
 ## Summary
-- To run: `yarn server` in root directory and then `yarn client` in a new terminal tab
+- To run: `yarn server` in root directory and then `yarn client` in a new terminal tab 
 - Client is on `localhost:3000`, server is on `localhost:5000`
 - Uses Express backend (default) and React frontend
   - I set up the Express files from scratch as I found it difficult to remove handlebars from the file(s) in the original
