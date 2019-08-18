@@ -5,7 +5,7 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
   const [designers, setDesigners] = useState([])
 
   // fetch designers list for dropdown
-  async function fetchDesignerList() {
+  const fetchDesignerList = async () => {
     let res = await fetch('/api/designers')
     let response = await res.json()
     setDesigners(response.uniqDesArr)

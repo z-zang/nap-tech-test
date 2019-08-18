@@ -8,11 +8,11 @@ const _ = require('lodash');
 const fs = require('file-system')
 
 // pathname ynap-react-express
-var path = require('path');
-var rootPath = path.normalize(__dirname);
+let path = require('path');
+let rootPath = path.normalize(__dirname);
 
 // data
-var allProducts = require(rootPath +'/fixtures/products.json').data
+const allProducts = require(rootPath +'/fixtures/products.json').data
 
 //////// ROUTES ////////////////////////////////////////
 
@@ -23,9 +23,9 @@ let designers = express.Router();
 
 // fetch individual product by id
 product.get('/:id', (req, res) => {
-  var requestedId = Number(req.params.id);
-  var productObj = _.find(allProducts, {'id': requestedId });
-  var body;
+  let requestedId = Number(req.params.id);
+  let productObj = _.find(allProducts, {'id': requestedId });
+  let body;
 
   if (productObj) {
       body = {
@@ -51,13 +51,13 @@ product.get('/:id', (req, res) => {
 
 // fetch all products V2 WITH SORT ** UPDATE FOR INCLUDING DESIGNER
 products.get('/', function (req, res) {
-  var designer = req.query.designer
-  var order = req.query.order
-  var offset = parseInt(req.query.offset) || 0;
-  var limit = parseInt(req.query.limit) || 60;
+  let designer = req.query.designer
+  let order = req.query.order
+  let offset = parseInt(req.query.offset) || 0;
+  let limit = parseInt(req.query.limit) || 60;
 
-  var results = allProducts
-  var total = results.length;
+  let results = allProducts
+  let total = results.length;
 
   // RETURNS ALL PRODUCTS BY DESIGNER QUERY PARAMS
   if (designer != undefined) {
@@ -98,8 +98,8 @@ products.get('/', function (req, res) {
 
 // fetch a list of all designers
 designers.get('/designers', function (req, res) {
-  var uniqDes = _.uniqBy(allProducts, 'brand.name.en')
-  var uniqDesArr = uniqDes.map((obj) => obj.brand.name.en).sort()
+  let uniqDes = _.uniqBy(allProducts, 'brand.name.en')
+  let uniqDesArr = uniqDes.map((obj) => obj.brand.name.en).sort()
   res.json({uniqDesArr});
 });
 

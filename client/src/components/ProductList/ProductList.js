@@ -2,9 +2,16 @@ import React from 'react';
 import Product from '../Product/Product';
 import './ProductList.css'
 
-function ProductList({products}) {
+function ProductList({products, totalProducts}) {
   return (
     <main id="products-container">
+
+    { totalProducts != 0 ? null :
+    <div>
+      There are currently no products available for this designer.
+    </div>
+    }
+
     {products.map(el => 
       <Product 
         key={el.id}

@@ -47,7 +47,7 @@ function App() {
         </Switch>
 
         <Switch>
-            <Route exact path="/" render={(x) => <ProductList {...x} products={products} />}/>
+            <Route exact path="/" render={(x) => <ProductList {...x} products={products} totalProducts={totalProducts}/>}/>
             <Route exact path='/product/:pid' component={ProductDetail}/>
             <Route component={Error}/>
         </Switch>
