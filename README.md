@@ -1,5 +1,6 @@
 # YNAP TECH TEST
 ## Summary
+- To install modules: `yarn install` and then `yarn install-client`
 - To run: `yarn server` in root directory and then `yarn client` in a new terminal tab 
 - Client is on `localhost:3000`, server is on `localhost:5000`
 - Uses Express backend (default) and React frontend
