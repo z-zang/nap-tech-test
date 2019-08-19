@@ -18,13 +18,16 @@ function App() {
     let designer = selDesigner === '' ? '' : `&designer=${selDesigner}` 
     let offsetVar = `&offset=${offset}`
     let sort = priceSort === '' ? '' : `&order=${priceSort}` 
-
     let url = '/api/products?' + designer + sort + offsetVar 
     console.log('fetchProducts requestURL:', url)
-    let res = await fetch(url)
-    let response = await res.json()
-    setProducts(response.data)
-    setTotalProducts(response.total)
+    try {
+      let res = await fetch(url)
+      let response = await res.json()
+      setProducts(response.data)
+      setTotalProducts(response.total)
+    } catch(error) {
+      console.log('error', error)
+    }
   }
 
   useEffect(() => {

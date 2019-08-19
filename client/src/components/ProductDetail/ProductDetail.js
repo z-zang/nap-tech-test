@@ -10,9 +10,13 @@ function ProductDetail({match}) {
   const fetchPid = async () => {
     let url = '/api/product/' + pid
     console.log('fetchPid requestURL:', url)
-    let res = await fetch(url)
-    let response = await res.json()
-    setProdData(response)
+    try {
+      let res = await fetch(url)
+      let response = await res.json()
+      setProdData(response)
+    } catch(error) {
+      console.log('error', error)
+    }
   }
 
   useEffect(() => {
