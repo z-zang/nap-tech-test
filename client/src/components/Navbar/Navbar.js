@@ -6,9 +6,13 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
 
   // fetch designers list for dropdown
   const fetchDesignerList = async () => {
-    let res = await fetch('/api/designers')
-    let response = await res.json()
-    setDesigners(response.uniqDesArr)
+    try {
+      let res = await fetch('/api/designers')
+      let response = await res.json()
+      setDesigners(response.uniqDesArr)
+    } catch(error) {
+      console.log('error', error)
+    }
   }
 
   useEffect(() => {
