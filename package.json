@@ -4,6 +4,7 @@
   "description": "nap tech test",
   "main": "server.js",
   "scripts": {
+    "install-client": "cd client/ && yarn install",
     "start": "node server.js",
     "server": "nodemon server.js --ignore './client/'",
     "client": "cd client/ && yarn start"
