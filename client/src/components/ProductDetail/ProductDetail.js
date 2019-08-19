@@ -55,11 +55,11 @@ function ProductDetail({match}) {
 
           {prodData.onSale === true ? <p>Onsale</p> : ''}
           
-          { prodData.badges.map(el => 
-          <p>Badge: {el}</p>)}
+          { prodData.badges.map((el, i) => 
+          <p key={i}>Badge: {el}</p>)}
           <div>
-            {prodData.sizes.map(el => 
-            <button>Size: {el.name}</button>
+            {prodData.sizes.map((el, i) => 
+            <button key={i}>Size: {el.name}</button>
             )}
           </div>
 

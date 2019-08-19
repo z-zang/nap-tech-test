@@ -66,8 +66,8 @@ function Navbar({offset, setOffset, priceSort, setPriceSort, selDesigner, setSel
 
       <select value={selDesigner} onChange={(e) => handleSetDesigner(e)}>
         <option value="" defaultValue>All Designers</option>
-        {designers.map(el =>
-          <option value={el} key={designers[el]}>{el}</option>
+        {designers.map((el, i) =>
+          <option value={el} key={i}>{el}</option>
         )}
       </select>
       

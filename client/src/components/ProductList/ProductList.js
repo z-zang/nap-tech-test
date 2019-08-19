@@ -12,9 +12,9 @@ function ProductList({products, totalProducts}) {
     </div>
     }
 
-    {products.map(el => 
+    {products.map((el, i) => 
       <Product 
-        key={el.id}
+        key={i}
         pid={el.id}
         name={el.name}
         price={el.price}
